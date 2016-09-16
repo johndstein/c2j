@@ -1,0 +1,25 @@
+{
+  "name": "c2j",
+  "version": "0.0.1",
+  "description": "Turn CSV files into JSON.",
+  "main": "index.js",
+  "dependencies": {
+    "commander": "2.9.0",
+    "csv-parse": "1.1.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johndstein/csvmapper.git"
+  },
+  "keywords": ["CSV", "JSON"],
+  "author": "John D. Stein",
+  "license": "http://unlicense.org",
+  "bugs": {
+    "url": "https://github.com/johndstein/csvmapper/issues"
+  },
+  "homepage": "https://github.com/johndstein/csvmapper#readme"
+}
