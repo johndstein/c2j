@@ -1,6 +1,6 @@
 {
   "name": "c2j",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Turn CSV files into JSON.",
   "main": "index.js",
   "dependencies": {
