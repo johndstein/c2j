@@ -207,10 +207,10 @@ if (!module.parent) {
     .option('-k, --keyColNames <colNames>', 'Comma delimited list of column names.', list)
     .option('-v, --valColNames [colNames]', 'Comma delimited list of column names.', list)
     .option('-i, --input [file]', 'Comma delimited list of file(s) to read from. If omitted we read STDIN.', list)
-    .option('-o, --output [file]', 'File to write to. If omitted we write to STDOUT')
+    .option('-o, --output [file]', 'File to write to. If omitted we write to STDOUT.')
     .option('-d, --duplicateKeys', 'If true, we assume multiple rows per key.')
     .option('-D, --keyDelimiter [character]', 'Key column delimiter. Defaults to underscore (_).')
-    .command('* [inputFile]')
+    .command('* [inputFile]', 'File to read from. If not specified we read from STDIN.')
     .action(function(inputFile) {
       input = inputFile;
     });

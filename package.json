@@ -1,11 +1,14 @@
 {
   "name": "c2j",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Turn CSV files into JSON.",
   "main": "index.js",
   "dependencies": {
     "commander": "2.9.0",
     "csv-parse": "1.1.7"
+  },
+  "bin": {
+    "c2j": "./index.js"
   },
   "devDependencies": {},
   "scripts": {
