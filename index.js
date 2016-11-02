@@ -3,7 +3,6 @@
 var fs = require('fs');
 var parse = require('csv-parse');
 var stream = require('stream');
-var cmd = require('commander');
 
 // Turns CSV files into "maps" AKA JSON, not real ES6 Maps.
 //
@@ -193,63 +192,4 @@ function CsvMapper() {
   };
 }
 
-function list(val) {
-  return val.split(',');
-}
-
-if (!module.parent) {
-
-  var input = null;
-
-  cmd
-    .version('0.0.1')
-    .usage('[options] [inputFile]')
-    .option('-k, --keyColNames <colNames>', 'Comma delimited list of column names.', list)
-    .option('-v, --valColNames [colNames]', 'Comma delimited list of column names.', list)
-    .option('-i, --input [file]', 'Comma delimited list of file(s) to read from. If omitted we read STDIN.', list)
-    .option('-o, --output [file]', 'File to write to. If omitted we write to STDOUT.')
-    .option('-d, --duplicateKeys', 'If true, we assume multiple rows per key.')
-    .option('-D, --keyDelimiter [character]', 'Key column delimiter. Defaults to underscore (_).')
-    .command('* [inputFile]', 'File to read from. If not specified we read from STDIN.')
-    .action(function(inputFile) {
-      input = inputFile;
-    });
-
-  cmd.parse(process.argv);
-
-  if (process.argv.length === 2) {
-    cmd.help();
-  }
-
-  // console.log('inputFile', input);
-  // console.log('keyColNames', cmd.keyColNames);
-  // console.log('valColNames', cmd.valColNames);
-  // console.log('input', cmd.input);
-  // console.log('output', cmd.output);
-  // console.log('duplicateKeys', cmd.duplicateKeys);
-  // console.log('keyDelimiter', cmd.keyDelimiter);
-
-  var options = {};
-  options.keyColNames = cmd.keyColNames;
-  options.valColNames = cmd.valColNames;
-  options.input = cmd.input;
-  options.duplicateKeys = cmd.duplicateKeys;
-  options.keyDelimiter = cmd.keyDelimiter;
-
-  // console.log(options);
-
-  var m = new CsvMapper();
-  var out = process.stdout;
-
-  if (cmd.output) {
-    out = fs.createWriteStream(cmd.output);
-  }
-
-  m.build(options, function(err, map) {
-    if (err) {
-      throw err;
-    } else {
-      out.write(JSON.stringify(map, null, 3));
-    }
-  });
-}
+exports = module.exports = CsvMapper;

@@ -1,1 +1,62 @@
-index.js
+#!/usr/bin/env node
+
+var cmd = require('commander');
+var CsvMapper = require('./');
+var pkg = require('./package');
+
+function list(val) {
+  return val.split(',');
+}
+
+var input = null;
+
+cmd
+  .version(pkg.version)
+  .usage('[options]')
+  .option('-k, --keyColNames <colNames>', 'Comma delimited list of column names.', list)
+  .option('-v, --valColNames [colNames]', 'Comma delimited list of column names.', list)
+  .option('-i, --input [file]', 'Comma delimited list of file(s) to read from. If omitted we read STDIN.', list)
+  .option('-o, --output [file]', 'File to write to. If omitted we write to STDOUT.')
+  .option('-d, --duplicateKeys', 'If true, we assume multiple rows per key.')
+  .option('-D, --keyDelimiter [character]', 'Key column delimiter. Defaults to underscore (_).')
+  .action(function(inputFile) {
+    input = inputFile;
+  });
+
+cmd.parse(process.argv);
+
+if (process.argv.length === 2) {
+  cmd.help();
+}
+
+// console.log('inputFile', input);
+// console.log('keyColNames', cmd.keyColNames);
+// console.log('valColNames', cmd.valColNames);
+// console.log('input', cmd.input);
+// console.log('output', cmd.output);
+// console.log('duplicateKeys', cmd.duplicateKeys);
+// console.log('keyDelimiter', cmd.keyDelimiter);
+
+var options = {};
+options.keyColNames = cmd.keyColNames;
+options.valColNames = cmd.valColNames;
+options.input = cmd.input;
+options.duplicateKeys = cmd.duplicateKeys;
+options.keyDelimiter = cmd.keyDelimiter;
+
+// console.log(options);
+
+var m = new CsvMapper();
+var out = process.stdout;
+
+if (cmd.output) {
+  out = fs.createWriteStream(cmd.output);
+}
+
+m.build(options, function(err, map) {
+  if (err) {
+    throw err;
+  } else {
+    out.write(JSON.stringify(map, null, 3));
+  }
+});
