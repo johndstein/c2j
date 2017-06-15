@@ -3,6 +3,7 @@
 var cmd = require('commander');
 var CsvMapper = require('./');
 var pkg = require('./package');
+var fs = require('fs');
 
 function list(val) {
   return val.split(',');
